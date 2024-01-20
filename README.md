@@ -62,12 +62,12 @@ Para executar a aplicação localmente, siga os passos abaixo:
 - Certifique-se de ter o Python instalado em seu sistema.
 2. Instale as dependências do projeto executando o seguinte comando no terminal:
 
-  ```bash
-  pip install -r requirements.txt
+    ```bash
+    pip install -r requirements.txt
 
 3. Rode a aplicação com o seguinte comando
-  ```bash
-  python app.py 
+    ```bash
+    python app.py 
 
 - Acesse o link: http://127.0.0.1:5000/anotacoes
 
@@ -77,8 +77,8 @@ Para executar os testes automatizados, siga os passos abaixo:
 1. Certifique-se de ter todas as dependências instaladas conforme mencionado acima.
 
 2. Execute o seguinte comando no terminal para rodar os testes:
-  ```bash
-  python test_app.py
+    ```bash
+    python test_app.py
 
 Isso executará os testes automatizados e fornecerá os resultados no terminal. Certifique-se de que todos os testes passem com sucesso antes de prosseguir com o desenvolvimento ou implantação da aplicação.
 
