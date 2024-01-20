@@ -8,7 +8,7 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
-# Adicione aqui as rotas da API
+# Rotas da API
 
 # POST
 @app.route('/anotacoes', methods=['POST'])
@@ -74,7 +74,7 @@ def update_anotacao(id):
     dados = request.json
     anotacao.classe = dados.get('classe', anotacao.classe)
     anotacao.confianca = dados.get('confianca', anotacao.confianca)
-    # Repita para os outros campos
+    
     db.session.commit()
     return jsonify({'mensagem': 'Anotação atualizada com sucesso!'})
 
@@ -96,6 +96,37 @@ def delete_anotacao(id):
     return jsonify({'mensagem': 'Anotação deletada com sucesso!'})
 
 
-
 if __name__ == '__main__':
     app.run(debug=True)
+
+    # Importe a classe Anotacao do seu modelo
+    from models import Anotacao
+
+    # Crie as 5 anotações automaticamente
+    with app.app_context():
+        for i in range(5):
+            classe = f"Classe de Anotação {i}"
+            confianca = 0.9  # Confiança (float)
+            centro_x = 50   # Centro X (int)
+            centro_y = 50   # Centro Y (int)
+            largura = 100   # Largura (int)
+            altura = 100    # Altura (int)
+            
+            # Defina alterada e sinalizada com base no índice i
+            alterada = True if i % 2 == 0 else False
+            sinalizada = True if i % 3 == 0 else False
+            
+            anotacao = Anotacao(
+                classe=classe,
+                confianca=confianca,
+                centro_x=centro_x,
+                centro_y=centro_y,
+                largura=largura,
+                altura=altura,
+                alterada=alterada,
+                sinalizada=sinalizada
+            )
+            db.session.add(anotacao)
+        
+        db.session.commit()
+

@@ -36,7 +36,7 @@ class APITestCase(unittest.TestCase):
 
     def test_update_anotacao(self):
         with app.app_context():
-            # Primeiro, criamos uma anotação para atualizar
+            # Criando uma anotação para atualizar
             anotacao = Anotacao(classe='moto', confianca=80, centro_x=100, centro_y=80, largura=50, altura=30)
             db.session.add(anotacao)
             db.session.commit()
@@ -83,8 +83,7 @@ class APITestCase(unittest.TestCase):
 
         response = self.app.get('/anotacoes/alteradas')
         self.assertEqual(response.status_code, 200)
-        # Aqui, você pode adicionar mais verificações para os dados retornados
-
+        
     def test_get_anotacoes_sinalizadas(self):
         with app.app_context():
             # Criando uma anotação sinalizada para teste
@@ -94,7 +93,6 @@ class APITestCase(unittest.TestCase):
 
         response = self.app.get('/anotacoes/sinalizadas')
         self.assertEqual(response.status_code, 200)
-        # Aqui, você pode adicionar mais verificações para os dados retornados
-
+        
 if __name__ == '__main__':
     unittest.main()
