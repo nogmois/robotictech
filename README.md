@@ -6,20 +6,30 @@ Esta API permite aos usuários adicionar, visualizar, atualizar, sinalizar e del
 
 ## Endpoints
 
-### POST /anotacoes
-- **Descrição:** Adiciona uma nova anotação.
-- **Corpo da Requisição:**
-  ```json
-  {
-    "classe": "String",
-    "confianca": Float,
-    "centro_x": Integer,
-    "centro_y": Integer,
-    "largura": Integer,
-    "altura": Integer
-  }
-  ```
-- **Resposta de Sucesso:** `{ "mensagem": "Anotação adicionada com sucesso!" }`
+#### POST /anotacoes
+
+**Descrição:** Adiciona uma nova anotação.
+
+**Corpo da Requisição:**
+
+- `classe` (String, obrigatório): A classe da anotação.
+- `confianca` (Float, obrigatório): A confiança na anotação (deve estar entre 0 e 1).
+- `centro_x` (Integer, obrigatório): A coordenada X do centro da anotação.
+- `centro_y` (Integer, obrigatório): A coordenada Y do centro da anotação.
+- `largura` (Integer, obrigatório): A largura da anotação.
+- `altura` (Integer, obrigatório): A altura da anotação.
+
+**Exemplo de Corpo da Requisição:**
+
+```json
+{
+  "classe": "carro",
+  "confianca": 0.9,
+  "centro_x": 150,
+  "centro_y": 100,
+  "largura": 60,
+  "altura": 40
+}
 
 ### GET /anotacoes
 - **Descrição:** Retorna todas as anotações.

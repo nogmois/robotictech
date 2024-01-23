@@ -23,7 +23,7 @@ class APITestCase(unittest.TestCase):
     def test_post_anotacao(self):
         test_anotacao = {
             'classe': 'carro',
-            'confianca': 90,
+            'confianca': 0.9,  # Corrigir para um valor entre 0 e 1
             'centro_x': 150,
             'centro_y': 100,
             'largura': 60,
@@ -33,6 +33,7 @@ class APITestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
         self.assertIn('mensagem', response.json)
         self.assertEqual(response.json['mensagem'], 'Anotação adicionada com sucesso!')
+
 
     def test_update_anotacao(self):
         with app.app_context():

@@ -14,12 +14,25 @@ with app.app_context():
 @app.route('/anotacoes', methods=['POST'])
 def add_anotacao():
     dados = request.json
+
+    # Verifica se todos os campos obrigatórios estão presentes no corpo da requisição
+    campos_obrigatorios = ['classe', 'confianca', 'centro_x', 'centro_y', 'largura', 'altura']
+    for campo in campos_obrigatorios:
+        if campo not in dados:
+            return jsonify({'erro': f'O campo "{campo}" é obrigatório.'}), 400
+
+    # Validações adicionais, por exemplo, se a confiança está dentro do intervalo de 0 a 1
+    if not 0 <= dados['confianca'] <= 1:
+        return jsonify({'erro': 'A confiança deve estar entre 0 e 1.'}), 422
+
+    # Resto do código para adicionar a anotação
     anotacao = Anotacao(classe=dados['classe'], confianca=dados['confianca'],
                         centro_x=dados['centro_x'], centro_y=dados['centro_y'],
                         largura=dados['largura'], altura=dados['altura'])
     db.session.add(anotacao)
     db.session.commit()
     return jsonify({'mensagem': 'Anotação adicionada com sucesso!'}), 201
+
 
 # GET
 @app.route('/anotacoes', methods=['GET'])
