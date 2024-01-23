@@ -1,20 +1,29 @@
+# Importa o Flask e outras dependências necessárias
 from flask import Flask, request, jsonify, redirect
 from models import db, Anotacao
 
+# Cria uma instância do aplicativo Flask
 app = Flask(__name__)
+
+# Configura a URL do banco de dados SQLite
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///anotacoes.db'
+
+# Inicializa o SQLAlchemy com o aplicativo Flask
 db.init_app(app)
+
 
 with app.app_context():
     db.create_all()
 
+
+# Rota inicial que redireciona para a rota /anotacoes
 @app.route('/')
 def index():
     return redirect('/anotacoes')
 
 # Rotas da API
 
-# POST
+# Rota para adicionar uma anotação via POST
 @app.route('/anotacoes', methods=['POST'])
 def add_anotacao():
     dados = request.json
@@ -29,7 +38,7 @@ def add_anotacao():
     if not 0 <= dados['confianca'] <= 1:
         return jsonify({'erro': 'A confiança deve estar entre 0 e 1.'}), 422
 
-    # Resto do código para adicionar a anotação
+    # Cria uma nova anotação com base nos dados recebidos e a adiciona ao banco de dados
     anotacao = Anotacao(classe=dados['classe'], confianca=dados['confianca'],
                         centro_x=dados['centro_x'], centro_y=dados['centro_y'],
                         largura=dados['largura'], altura=dados['altura'])
@@ -38,17 +47,19 @@ def add_anotacao():
     return jsonify({'mensagem': 'Anotação adicionada com sucesso!'}), 201
 
 
-# GET
+# Rota para listar todas as anotações via GET
 @app.route('/anotacoes', methods=['GET'])
 def get_anotacoes():
     anotacoes = Anotacao.query.all()
     return jsonify([{'id': anot.id, 'classe': anot.classe, 'confianca': anot.confianca, 'centro_x': anot.centro_x, 'centro_y': anot.centro_y, 'largura': anot.largura, 'altura': anot.altura} for anot in anotacoes])
 
+# Rota para obter uma anotação específica pelo seu ID via GET
 @app.route('/anotacoes/<int:id>', methods=['GET'])
 def get_anotacao(id):
     anotacao = Anotacao.query.get_or_404(id)
     return jsonify({'id': anotacao.id, 'classe': anotacao.classe, 'confianca': anotacao.confianca, 'centro_x': anotacao.centro_x, 'centro_y': anotacao.centro_y, 'largura': anotacao.largura, 'altura': anotacao.altura})
 
+# Rota para listar anotações alteradas via GET
 @app.route('/anotacoes/alteradas', methods=['GET'])
 def get_anotacoes_alteradas():
     anotacoes = Anotacao.query.filter_by(alterada=True).all()
@@ -65,6 +76,7 @@ def get_anotacoes_alteradas():
         'sinalizada': anot.sinalizada
     } for anot in anotacoes])
 
+# Rota para listar anotações sinalizadas via GET
 @app.route('/anotacoes/sinalizadas', methods=['GET'])
 def get_anotacoes_sinalizadas():
     anotacoes = Anotacao.query.filter_by(sinalizada=True).all()
@@ -83,8 +95,7 @@ def get_anotacoes_sinalizadas():
 
 
 
-# PUT
-
+# Rota para atualizar uma anotação pelo seu ID via PUT
 @app.route('/anotacoes/<int:id>', methods=['PUT'])
 def update_anotacao(id):
     anotacao = Anotacao.query.get_or_404(id)
@@ -95,6 +106,7 @@ def update_anotacao(id):
     db.session.commit()
     return jsonify({'mensagem': 'Anotação atualizada com sucesso!'})
 
+# Rota para sinalizar uma anotação como errada via PUT
 @app.route('/anotacoes/sinalizar/<int:id>', methods=['PUT'])
 def sinalizar_anotacao(id):
     anotacao = Anotacao.query.get_or_404(id)
@@ -103,8 +115,7 @@ def sinalizar_anotacao(id):
     return jsonify({'mensagem': 'Anotação sinalizada como errada.'})
 
 
-# DELETE
-
+# Rota para deletar uma anotação pelo seu ID via DELETE
 @app.route('/anotacoes/<int:id>', methods=['DELETE'])
 def delete_anotacao(id):
     anotacao = Anotacao.query.get_or_404(id)
@@ -112,14 +123,13 @@ def delete_anotacao(id):
     db.session.commit()
     return jsonify({'mensagem': 'Anotação deletada com sucesso!'})
 
-
+# Inicializa o aplicativo Flask quando este script é executado diretamente
 if __name__ == '__main__':
-    
 
-    # Importe a classe Anotacao do seu modelo
+    # Importa a classe Anotacao do seu modelo
     from models import Anotacao
 
-    # Crie as 5 anotações automaticamente
+    # Cria as 5 anotações quando o aplicativo é executado
     with app.app_context():
         for i in range(5):
             classe = f"Classe de Anotação {i}"
@@ -146,5 +156,6 @@ if __name__ == '__main__':
             db.session.add(anotacao)
         
         db.session.commit()
-
+    
+    # Executa o aplicativo Flask em modo de depuração
     app.run(debug=True)
