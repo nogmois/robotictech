@@ -70,6 +70,12 @@ Para executar a aplicação localmente, siga os passos abaixo:
 
    ```bash
    git clone https://github.com/nogmois/robotictech.git
+   
+   cd robotictech
+
+   python3 -m venv .venv
+   source .venv/bin/activate
+
 
 - Certifique-se de ter o Python instalado em seu sistema.
 2. Instale as dependências do projeto executando o seguinte comando no terminal:
