@@ -4,6 +4,8 @@
 ## Descrição
 Esta API permite aos usuários adicionar, visualizar, atualizar, sinalizar e deletar anotações em imagens.
 
+E Foi desenvolvida em Flask um Framework web do Python
+
 ## Endpoints
 
 #### POST /anotacoes
@@ -67,7 +69,7 @@ Para executar a aplicação localmente, siga os passos abaixo:
 1. Clone o repositório para o seu ambiente local.
 
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
+   git clone https://github.com/nogmois/robotictech.git
 
 - Certifique-se de ter o Python instalado em seu sistema.
 2. Instale as dependências do projeto executando o seguinte comando no terminal:
