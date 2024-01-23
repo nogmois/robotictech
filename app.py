@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, redirect
 from models import db, Anotacao
 
 app = Flask(__name__)
@@ -7,6 +7,10 @@ db.init_app(app)
 
 with app.app_context():
     db.create_all()
+
+@app.route('/')
+def index():
+    return redirect('/anotacoes')
 
 # Rotas da API
 
@@ -110,7 +114,7 @@ def delete_anotacao(id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    
 
     # Importe a classe Anotacao do seu modelo
     from models import Anotacao
@@ -143,3 +147,4 @@ if __name__ == '__main__':
         
         db.session.commit()
 
+    app.run(debug=True)
