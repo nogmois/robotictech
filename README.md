@@ -21,15 +21,15 @@ Esta API permite aos usuários adicionar, visualizar, atualizar, sinalizar e del
 
 **Exemplo de Corpo da Requisição:**
 
-```json
-{
-  "classe": "carro",
-  "confianca": 0.9,
-  "centro_x": 150,
-  "centro_y": 100,
-  "largura": 60,
-  "altura": 40
-}
+    ```json
+    {
+    "classe": "carro",
+    "confianca": 0.9,
+    "centro_x": 150,
+    "centro_y": 100,
+    "largura": 60,
+    "altura": 40
+    }
 
 ### GET /anotacoes
 - **Descrição:** Retorna todas as anotações.
